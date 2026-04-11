@@ -1,0 +1,46 @@
+import json
+import os
+
+# Estrutura de dados inicial
+clientes = {
+    "101": {
+        "nome": "Maria",
+        "idade": 25,
+        "cidade": "São Paulo"
+    },
+    "102": {
+        "nome": "João",
+        "idade": 30,
+        "cidade": "Rio de Janeiro"
+    },
+    "103": {
+        "nome": "Ana",
+        "idade": 22,
+        "cidade": "Curitiba"
+    }
+} # Verifique se esta chave fecha o dicionário antes das funções
+
+ARQUIVO = "base_clientes.json"
+
+def salvar_dados(dados):
+    """Salva o dicionário no arquivo .json"""
+    with open(ARQUIVO, "w", encoding="utf-8") as f:
+        json.dump(dados, f, indent=4, ensure_ascii=False)
+    print(f"✅ Dados salvos com sucesso em {ARQUIVO}")
+
+def carregar_e_exibir():
+    """Carrega os dados do arquivo e exibe de forma organizada"""
+    if not os.path.exists(ARQUIVO):
+        print("❌ Arquivo não encontrado!")
+        return
+
+    with open(ARQUIVO, "r", encoding="utf-8") as f:
+        dados_carregados = json.load(f)
+        
+    print("\n--- CLIENTES CADASTRADOS ---")
+    for id_cliente, info in dados_carregados.items():
+        print(f"ID: {id_cliente} | Nome: {info['nome']} | Idade: {info['idade']} | Cidade: {info['cidade']}")
+
+# Chamada das funções
+salvar_dados(clientes)
+carregar_e_exibir()
