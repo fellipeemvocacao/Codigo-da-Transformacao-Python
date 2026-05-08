@@ -1,0 +1,5 @@
+print("Olá, mundo!")
+type("Texto")
+type(25)	
+type(3.14)	
+type(True)	

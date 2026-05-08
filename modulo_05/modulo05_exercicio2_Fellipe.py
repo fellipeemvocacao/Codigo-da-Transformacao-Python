@@ -1,18 +1,3 @@
-def login_seguro():
-    usuario_correto = "Ivan"
-    senha_correta = "5119"
-    
-    print("--- ACESSO AO SISTEMA ---")
-    while True:
-        user = input("Usuário: ")
-        password = input("Senha: ")
-        
-        if user == usuario_correto and password == senha_correta:
-            print("Login realizado com sucesso!\n")
-            return True
-        else:
-            print("Dados incorretos! Tente novamente.\n") 
-
 def saudar_usuario(nome):
     print(f"Olá, {nome}! Seja bem-vindo ao nosso sistema.")
 
@@ -25,7 +10,7 @@ def maior_menor(n1, n2, n3, n4):
     maior = max(n1, n2, n3, n4)
     menor = min(n1, n2, n3, n4)
     return maior, menor
-if login_seguro():
+if calcula_media:
     nome_aluno = input("Digite o seu nome: ")
     saudar_usuario(nome_aluno)
 
