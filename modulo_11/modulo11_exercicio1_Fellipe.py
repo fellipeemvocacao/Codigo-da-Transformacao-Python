@@ -12,4 +12,4 @@ cursor.execute('''
 
 conexao.commit()
 conexao.close()
-print("Banco de dados e tabela 'Clientes' criados com sucesso!")
+print("Atividade 1 concluída: Tabela criada.")
