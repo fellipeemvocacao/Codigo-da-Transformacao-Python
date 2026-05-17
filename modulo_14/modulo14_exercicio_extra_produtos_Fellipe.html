@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Produtos</title>
+    <style>
+        .paginacao { margin-top: 20px; }
+        .paginacao a, .paginacao span { padding: 8px 12px; border: 1px solid #ccc; margin: 2px; text-decoration: none; }
+        .paginacao .atual { background-color: #007bff; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Nossos Produtos</h1>
+
+    <form action="/produtos" method="GET">
+        <input type="text" name="q" value="{{ busca }}" placeholder="Buscar produto pelo nome...">
+        <button type="submit">Buscar</button>
+        {% if busca %}
+            <a href="/produtos">Limpar busca</a>
+        {% endif %}
+    </form>
+
+    <hr>
+
+    <ul>
+        {% for produto in paginacao.items %}
+            <li>{{ produto.nome }} - R$ {{ "%.2f"|format(produto.preco) }}</li>
+        {% else %}
+            <li>Nenhum produto encontrado.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="paginacao">
+        {# Link para a página anterior #}
+        {% if paginacao.has_prev %}
+            <a href="{{ url_for('listar_produtos', page=paginacao.prev_num, q=busca) }}">&laquo; Anterior</a>
+        {% endif %}
+
+        {# Números das páginas #}
+        {% for pagina in paginacao.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if pagina %}
+                {% if pagina == paginacao.page %}
+                    <span class="atual">{{ pagina }}</span>
+                {% else %}
+                    <a href="{{ url_for('listar_produtos', page=pagina, q=busca) }}">{{ pagina }}</a>
+                {% endif %}
+            {% else %}
+                <span>...</span>
+            {% endif %}
+        {% endfor %}
+
+        {# Link para a próxima página #}
+        {% if paginacao.has_next %}
+            <a href="{{ url_for('listar_produtos', page=paginacao.next_num, q=busca) }}">Próxima &raquo;</a>
+        {% endif %}
+    </div>
+
+</body>
+</html>
