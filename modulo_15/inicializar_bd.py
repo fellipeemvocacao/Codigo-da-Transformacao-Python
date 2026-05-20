@@ -1,4 +1,4 @@
-from projeto_cdt_fellipe_gustavo_rocha.app import app, db, Conteudo
+from app import app, db, Conteudo
 
 def povoar_banco():
     with app.app_context():

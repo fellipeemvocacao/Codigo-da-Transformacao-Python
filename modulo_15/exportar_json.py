@@ -1,5 +1,5 @@
 import json
-from projeto_cdt_fellipe_gustavo_rocha.app import app, db, Conteudo
+from app import app, db, Conteudo
 
 with app.app_context():
     todos_os_conteudos = Conteudo.query.all()
