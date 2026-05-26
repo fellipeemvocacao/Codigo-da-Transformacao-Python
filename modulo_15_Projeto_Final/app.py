@@ -7,9 +7,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/igreja_catolica.db'
+if os.environ.get('RENDER'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/igreja_catolica.db'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///igreja_catolica.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
 
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,12 +29,12 @@ class Conteudo(db.Model):
     titulo = db.Column(db.String(150), nullable=False)
     texto = db.Column(db.Text, nullable=False)
 
-with app.app_context():
-    db.create_all()
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/api/cadastro', methods=['POST'])
 def cadastro():
@@ -78,7 +84,9 @@ def obter_conteudo(cat_id, op_id):
             "titulo": resultado.titulo,
             "texto": resultado.texto
         })
-    return jsonify({"erro": "Conteúdo não encontrado"}), 404
+    
+    return jsonify({"erro": "Conteúdo não encontrado no banco de dados."}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)
